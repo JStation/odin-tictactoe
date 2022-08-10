@@ -37,6 +37,7 @@ const Gameboard = (() => {
 
 const DisplayController = (() => {
     const grid = document.querySelector(".grid-container");
+    const cells = [];
 
     const createGridCells = () => {
         for (let i = 0;i<9;i++) {
@@ -44,6 +45,7 @@ const DisplayController = (() => {
             cell.className = "cell";
             cell.dataset.index = i;
             grid.appendChild(cell);
+            cells.push(cell);
         }
     };
 
@@ -54,22 +56,35 @@ const DisplayController = (() => {
         console.log({state});
         if (state == "X") {
             // update class on cell
+            cells[index].classList.add("filled");
             // draw mark
+            cells[index].innerText = "X";
             console.log("Draw X")
         } else if (state == "O") {
             // update class on cell
+            cells[index].classList.add("filled");
             // draw mark
+            cells[index].innerText = "O";
             console.log("Draw O");
         } else {
             // update class on cell
+            cells[index].classList.remove("filled");
             // remove marks
+            cells[index].innerText = "";
             console.log("Clear cell");
         }
-    }
+    };
+
+    const drawAllCells = () => {
+        for (let i = 0;i < cells.length;i++) {
+            drawCell(i);
+        }
+    };
 
     return {
         createGridCells,
         drawCell,
+        drawAllCells,
     };
 })();
 

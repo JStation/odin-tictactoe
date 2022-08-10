@@ -24,8 +24,12 @@ body {
 
 .cell {
     background-color: burlywood;
+    display: grid;
+    place-items: center;
 }
 
 .filled {
-    font-size: 10rem;
+    color:brown;
+    font-size: 5rem;
+    background-color: rgb(179, 133, 73);
 }
