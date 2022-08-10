@@ -35,6 +35,17 @@ const Gameboard = (() => {
     };
 })();
 
+// Player object attaches a name to a mark
+// Factory generates player objects at beginning of game
+const Player = (name, mark) => {
+    const getName = () => name;
+    const getMark = () => mark; // "X" or "O"
+
+    return {getName, getMark};
+};
+
+// Display concerns classes and marks in the grid
+// relies on data-index for mapping to gameboard
 const DisplayController = (() => {
     const grid = document.querySelector(".grid-container");
     const cells = [];
@@ -90,3 +101,11 @@ const DisplayController = (() => {
 
 // Build board
 DisplayController.createGridCells();
+
+const Game = (() => {
+    let isPlayerOneTurn = true;
+
+    return {
+        isPlayerOneTurn,
+    }
+})();

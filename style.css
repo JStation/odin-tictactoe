@@ -15,6 +15,7 @@ body {
     height: 320px;
 
     border: 10px solid darkslategray;
+    border-radius: 6px;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
