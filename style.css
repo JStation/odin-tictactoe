@@ -2,3 +2,26 @@ html {
     color: antiquewhite;
     background-color: black;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-container {
+    background-color: darkslategrey;
+    width: 320px;
+    height: 320px;
+
+    border: 10px solid darkslategray;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.cell {
+    background-color: burlywood;
+}
