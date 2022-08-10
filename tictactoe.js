@@ -48,10 +48,10 @@ const DisplayController = (() => {
     };
 
     const drawCell = (index) => {
-        // loop through gameboard and update cells
+        // update class and mark on specified cell
         let board = Gameboard.getBoard();
         let state = board[index];
-        console.log(state);
+        console.log({state});
         if (state == "X") {
             // update class on cell
             // draw mark

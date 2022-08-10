@@ -25,3 +25,7 @@ body {
 .cell {
     background-color: burlywood;
 }
+
+.filled {
+    font-size: 10rem;
+}
