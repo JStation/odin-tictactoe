@@ -23,7 +23,7 @@ const Gameboard = (() => {
 const DisplayController = (() => {
     const grid = document.querySelector(".grid-container");
 
-    const drawBoardElements = () => {
+    const createGridCells = () => {
         for (let i = 0;i<9;i++) {
             let cell = document.createElement("div");
             cell.className = "cell";
@@ -34,9 +34,9 @@ const DisplayController = (() => {
     };
 
     return {
-        drawBoardElements,
+        createGridCells,
     };
 })();
 
 // Build board
-DisplayController.drawBoardElements();
+DisplayController.createGridCells();
