@@ -19,3 +19,24 @@ const Gameboard = (() => {
         getBoard,
     };
 })();
+
+const DisplayController = (() => {
+    const grid = document.querySelector(".grid-container");
+
+    const drawBoardElements = () => {
+        for (let i = 0;i<9;i++) {
+            let cell = document.createElement("div");
+            cell.className = "cell";
+            cell.dataset.index = i;
+            grid.appendChild(cell);
+        }
+
+    };
+
+    return {
+        drawBoardElements,
+    };
+})();
+
+// Build board
+DisplayController.drawBoardElements();
