@@ -28,6 +28,40 @@ const Gameboard = (() => {
         }
     }
 
+    const checkBoard = () => {
+        console.log(`checkBoardIsWon: ${checkBoardIsWon()}`);
+        console.log(`checkBoardIsTied: ${checkBoardIsTied()}`);
+    }
+
+    // check board for winner
+    // start with brute force -- scan rows columns and diagonals
+    const checkBoardIsWon = () => {
+        let b = board;
+        // check rows
+        if (b[0] == b[1] && b[1] == b[2] && b[2] != null) return true;
+        if (b[3] == b[4] && b[4] == b[5] && b[5] != null) return true;
+        if (b[6] == b[7] && b[7] == b[8] && b[8] != null) return true;
+
+        // check columns
+        if (b[0] == b[3] && b[3] == b[6] && b[6] != null) return true;
+        if (b[1] == b[4] && b[4] == b[7] && b[7] != null) return true;
+        if (b[2] == b[5] && b[5] == b[8] && b[8] != null) return true;
+
+        // check diagonals
+        if (b[0] == b[4] && b[4] == b[8] && b[8] != null) return true;
+        if (b[2] == b[4] && b[4] == b[6] && b[6] != null) return true;
+
+        // no winner found
+        return false;
+    }
+
+
+    // check board for tie -- expects to already be checked for won condition
+    const checkBoardIsTied = () => {
+        // if the board is missing empty space; game is tied
+        return !board.includes(null);
+    }
+
     // check if cell is empty/legal for place
     const isValidMove = (index) => {
         return board[index] === null;
@@ -44,6 +78,7 @@ const Gameboard = (() => {
         randomizeBoard,
         isValidMove,
         setMarkOnCell,
+        checkBoard,
     };
 })();
 
@@ -67,6 +102,7 @@ const DisplayController = (() => {
             let cell = document.createElement("div");
             cell.className = "cell";
             cell.dataset.index = i;
+            cell.addEventListener("click", Game.clickCell);
             grid.appendChild(cell);
             cells.push(cell);
         }
@@ -111,13 +147,35 @@ const DisplayController = (() => {
     };
 })();
 
-// Build board
-DisplayController.createGridCells();
-
 const Game = (() => {
     let isPlayerOneTurn = true;
+    let gameOver = false;
+
+    const clickCell = (evt) => {
+        let index = evt.currentTarget.dataset.index;
+        // is game over? bail
+        if (gameOver == true) return;
+        // is move valid? bail if not
+        if (!Gameboard.isValidMove(index)) return;
+        // make move
+        Gameboard.setMarkOnCell(index, "X");
+        // redraw cell
+        DisplayController.drawCell(index);
+        // check for win or draw
+        Gameboard.checkBoard();
+        // change player
+        nextPlayer();
+    }
+
+    const nextPlayer = () => {
+        isPlayerOneTurn = !isPlayerOneTurn;
+    }
 
     return {
         isPlayerOneTurn,
+        clickCell,
     }
 })();
+
+// Build board
+DisplayController.createGridCells();
