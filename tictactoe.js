@@ -79,6 +79,8 @@ const Gameboard = (() => {
         isValidMove,
         setMarkOnCell,
         checkBoard,
+        checkBoardIsWon,
+        checkBoardIsTied,
     };
 })();
 
@@ -143,7 +145,7 @@ const DisplayController = (() => {
     const setInfoMessage = (msg) => {
         const info = document.querySelector(".info");
         info.innerText = msg;
-    }
+    };
 
     return {
         createGridCells,
@@ -156,6 +158,8 @@ const DisplayController = (() => {
 const Game = (() => {
     let isPlayerOneTurn = true;
     let gameOver = false;
+    let playerOne = Player("P1", "X");
+    let playerTwo = Player("P2", "O");
 
     const clickCell = (evt) => {
         let index = evt.currentTarget.dataset.index;
@@ -163,18 +167,61 @@ const Game = (() => {
         if (gameOver == true) return;
         // is move valid? bail if not
         if (!Gameboard.isValidMove(index)) return;
+        // find activePlayer
+        let player = getActivePlayer();
         // make move
-        Gameboard.setMarkOnCell(index, "X");
+        Gameboard.setMarkOnCell(index, player.getMark());
         // redraw cell
         DisplayController.drawCell(index);
-        // check for win or draw
-        Gameboard.checkBoard();
-        // change player
-        nextPlayer();
+        // check for win
+        if (Gameboard.checkBoardIsWon()) {
+            gameWon(); 
+        // ...or a draw
+        } else if (Gameboard.checkBoardIsTied()) {
+            gameTied();
+        // ...or keep playing
+        } else {
+            nextPlayer();
+        }
     }
 
     const nextPlayer = () => {
         isPlayerOneTurn = !isPlayerOneTurn;
+        let player = getActivePlayer();
+        DisplayController.setInfoMessage(`${player.getName()}'s turn. Place an ${player.getMark()}`);
+    }
+
+    const gameWon = () => {
+        gameOver = true;
+        let player = getActivePlayer();
+        DisplayController.setInfoMessage(`${player.getName()} Wins!`);
+        endGame();
+
+    }
+
+    const gameTied = () => {
+        gameOver = true;
+        DisplayController.setInfoMessage("Tie Game!");
+        endGame();
+    }
+
+    const endGame = () => {
+        // blur board slightly? to indicate not active
+        // create new game button below info box
+        const body = document.body;
+        const button = document.createElement("button");
+        button.setAttribute("id", "newGameButton");
+        button.innerText = "New Game";
+        body.appendChild(button);
+
+    }
+
+    const getActivePlayer = () => {
+        if (isPlayerOneTurn) {
+            return playerOne;
+        } else {
+            return playerTwo;
+        }
     }
 
     return {
