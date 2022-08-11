@@ -14,6 +14,12 @@ const Gameboard = (() => {
 
     const getBoard = () => board;
 
+    const reset = () => {
+        for (let i=0;i<board.length;i++) {
+            board[i] = null;
+        }
+    }
+
     // for TESTING
     const randomizeBoard = () => {
         for (let i=0;i<board.length;i++) {
@@ -28,6 +34,7 @@ const Gameboard = (() => {
         }
     }
 
+    // for TESTING
     const checkBoard = () => {
         console.log(`checkBoardIsWon: ${checkBoardIsWon()}`);
         console.log(`checkBoardIsTied: ${checkBoardIsTied()}`);
@@ -81,6 +88,7 @@ const Gameboard = (() => {
         checkBoard,
         checkBoardIsWon,
         checkBoardIsTied,
+        reset,
     };
 })();
 
@@ -206,14 +214,29 @@ const Game = (() => {
     }
 
     const endGame = () => {
-        // blur board slightly? to indicate not active
+        // TODO: blur board slightly? to indicate not active
         // create new game button below info box
         const body = document.body;
         const button = document.createElement("button");
         button.setAttribute("id", "newGameButton");
         button.innerText = "New Game";
+        button.addEventListener("click", newGame);
         body.appendChild(button);
+    }
 
+    const newGame = () => {
+        // reset board
+        Gameboard.reset()
+        // reset game variables
+        isPlayerOneTurn = false; // rolled over by nextPlayer function
+        gameOver = false;
+        // remove newGame button
+        const button = document.querySelector("#newGameButton");
+        button.remove();
+        // redraw board
+        DisplayController.drawAllCells();
+        // update message
+        nextPlayer();
     }
 
     const getActivePlayer = () => {
