@@ -140,10 +140,16 @@ const DisplayController = (() => {
         }
     };
 
+    const setInfoMessage = (msg) => {
+        const info = document.querySelector(".info");
+        info.innerText = msg;
+    }
+
     return {
         createGridCells,
         drawCell,
         drawAllCells,
+        setInfoMessage,
     };
 })();
 
