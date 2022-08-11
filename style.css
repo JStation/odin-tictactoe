@@ -39,3 +39,16 @@ body {
     font-size: 1.5rem;
     margin-top: 2rem;
 }
+
+#newGameButton {
+    margin-top: 2rem;
+    outline: none;
+    background-color: rgb(119, 230, 119);
+    border: none;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
+#newGameButton:hover {
+    background-color: lightgreen;
+}
