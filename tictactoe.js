@@ -28,10 +28,22 @@ const Gameboard = (() => {
         }
     }
 
+    // check if cell is empty/legal for place
+    const isValidMove = (index) => {
+        return board[index] === null;
+    }
+
+    // mark cell in gameboard
+    const setMarkOnCell = (index, mark) => {
+        board[index] = mark;
+    }
+
     // return exposed functions and data (public)
     return {
         getBoard,
         randomizeBoard,
+        isValidMove,
+        setMarkOnCell,
     };
 })();
 
