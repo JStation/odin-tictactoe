@@ -1,5 +1,3 @@
-console.log("tictactoe.js loaded")
-
 /* 
 Note from project page:
 Minimize global code by using modules and factories
@@ -122,25 +120,21 @@ const DisplayController = (() => {
         // update class and mark on specified cell
         let board = Gameboard.getBoard();
         let state = board[index];
-        console.log({state});
         if (state == "X") {
             // update class on cell
             cells[index].classList.add("filled");
             // draw mark
             cells[index].innerText = "X";
-            console.log("Draw X")
         } else if (state == "O") {
             // update class on cell
             cells[index].classList.add("filled");
             // draw mark
             cells[index].innerText = "O";
-            console.log("Draw O");
         } else {
             // update class on cell
             cells[index].classList.remove("filled");
             // remove marks
             cells[index].innerText = "";
-            console.log("Clear cell");
         }
     };
 
