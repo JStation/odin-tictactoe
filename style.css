@@ -27,6 +27,7 @@ body {
     background-color: burlywood;
     display: grid;
     place-items: center;
+    padding: 0;
 }
 
 .filled {
